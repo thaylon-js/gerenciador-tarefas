@@ -76,6 +76,7 @@ async function deleteUser(idUser){
  
 } 
 module.exports = {
+    searchUserById,
     listAllUsers,
     createUser,
     updateUser,
