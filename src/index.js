@@ -1,9 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
+
 const database = require('./database/database'); 
-const User = require('./models/UserModel'); 
+const UserModel = require('./models/UserModel'); 
+const userRoutes = require('./routes/UserRoutes');
+
 
 const app = express();
 
@@ -11,7 +15,10 @@ app.use(cors({
     origin: 'http://localhost:5173',
 }));
 
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/api/users', userRoutes);
 
 database.sync({ force: false })
     .then(() => {
