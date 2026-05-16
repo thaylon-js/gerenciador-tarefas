@@ -286,3 +286,9 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm,node,react,visualstudiocode
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/.gitignore
+/.idea/dataSources.xml
+/.idea/gerenciador-tarefas.iml
+/.idea/modules.xml
+/.idea/vcs.xml

@@ -1,53 +1,50 @@
 const UserModel = require('../models/UserModel');
 
 async function listAllUsers() {
-    let listUsers = [];
-    await UserModel
-        .findAll({ order: [['createdAt', 'DESC']] })
-        .then(users => {
-            listUsers = users;
+    return await UserModel
+        .findAll({
+            order: [['createdAt', 'DESC']],
         })
-        .catch(error => {
+        .catch((error) => {
             console.error('Erro ao listar usuários:', error);
         });
-    return listUsers;
-
 }
 
 async function searchUserById(id){
-    let user = {};
-    await UserModel
-        .findOne({ 
-            where: {id: id}
-        })   
-        .then(result=>{
-            user = result;
-        })
-        .catch(error=>{
+    return await UserModel
+        .findByPk(id)
+        .catch((error) => {
             console.error('Erro ao buscar usuário por ID:', error);
         });
-    return user;
 }
 
-async function createUser(user){ 
-    await UserModel
+async function createUser(user){
+    const existingUser = await UserModel.findOne({
+        where: { username: user.username }
+    });
+
+    if(existingUser !== 0){
+        return null
+    }
+
+    return await UserModel
         .create(user)
-        .then(result => {
-            newUser = result;
-        })
         .catch(error => {
             console.error('Erro ao criar usuário:', error);
         });
 }
 
-async function updateUser(id, username, password, email, role){
+async function updateUser(id, user){
+    const existingUser = await UserModel.findByPk(id);
+
+    console.log(existingUser);
+
+    if(existingUser === null){
+        return null;
+    }
+
     const userEffect = await UserModel
-        .update({
-            username: username,
-            password: password,
-            email: email,
-            role: role
-        }, {
+        .update(user, {
             where: { id: id }
         })
         .catch(error => {
@@ -57,7 +54,8 @@ async function updateUser(id, username, password, email, role){
         if (userEffect === 0) {
             return null;
         }
-        return await searchUserById(id);
+
+        return userEffect;
 }
 
 async function deleteUser(idUser){
@@ -71,13 +69,15 @@ async function deleteUser(idUser){
 
         if (userEffect === 0) {
             return null;
-        }         
+        }
+
         return userEffect;
- 
-} 
+}
+
 module.exports = {
     listAllUsers,
+    searchUserById,
     createUser,
     updateUser,
     deleteUser
-}   
+}
