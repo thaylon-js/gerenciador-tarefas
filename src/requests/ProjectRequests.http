@@ -1,0 +1,42 @@
+## ListAllProjects
+GET localhost:3000/api/projects
+Accept: application/json
+
+###
+
+## GetProjectById
+GET localhost:3000/api/projects/1
+Accept: application/json
+
+###
+
+## CreateProject
+POST localhost:3000/api/projects
+Content-Type: application/json
+
+{
+  "name": "New Project",
+  "description": "This is a new project.",
+  "status": "active",
+  "startDate": "2024-01-01",
+  "endDateEstimated": "2024-12-31"
+}
+
+###
+
+## UpdateProject
+PUT localhost:3000/api/projects/3
+Content-Type: application/json
+
+{
+    "name": "Updated Project",
+    "description": "This is an updated project.",
+    "status": "completed",
+    "startDate": "2024-01-01",
+    "endDateEstimated": "2024-12-31"
+}
+
+###
+
+## DeleteProject
+DELETE localhost:3000/api/projects/3
