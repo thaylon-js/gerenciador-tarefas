@@ -1,0 +1,40 @@
+## ListAllUsers
+GET http://localhost:3000/api/users
+Accept: application/json
+
+###
+
+## GetUserById
+GET http://localhost:3000/api/users?1
+Accept: application/json
+
+###
+
+## CreateUser
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "username": "newuser",
+    "email": "newuser@email.com",
+    "password": "newuser123",
+    "role": "user"
+}
+
+###
+
+## UpdateUser
+PUT http://localhost:3000/api/users/1
+Content-Type: application/json
+
+{
+    "username": "updateduser",
+    "email": "updateuser@email.com",
+    "password": "updateduser123",
+    "role": "user"
+}
+
+###
+
+## DeleteUser
+DELETE http://localhost:3000/api/users/1
