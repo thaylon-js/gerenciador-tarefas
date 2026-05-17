@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 
-const database = require('./database/database'); 
+const database = require('./database/database');
 const ProjectModel = require('./models/ProjectModel');
 const UserModel = require('./models/UserModel'); 
 const userRoutes = require('./routes/UserRoutes');
