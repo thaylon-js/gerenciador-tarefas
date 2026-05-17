@@ -52,6 +52,27 @@ const searchProjectById = async (req, res) => {
      }
  }
 
+const updateProject = async (req, res) => {
+    try {
+        const projectId = req.params.id;
+
+        if(!projectId) {
+            return res.status(400).json({message: "Id do projeto é obrigatório."});
+        }
+
+        const newProject = await ProjectServices.updateProject(projectId, req.body);
+
+
+        if (newProject) {
+            res.status(200).json({message: "Projeto atualizado."});
+        } else {
+            res.status(400).json({message: "Erro ao atualizar o projeto"});
+        }
+    } catch (error) {
+        res.status(500).json({message: "Erro ao atualizar"});
+    }
+}
+
  const deleteProject = async (req, res) => {
     try {
         const ProjectId = req.params.id;
@@ -62,7 +83,7 @@ const searchProjectById = async (req, res) => {
         const project = await ProjectServices.deleteProject(ProjectId);
 
         if (project) {
-            res.status(200).json(project, {message:"Projeto deletado com sucesso."});
+            res.status(200).json({message:"Projeto deletado com sucesso."});
         } else {
             res.status(400).json({message: "Erro ao deletar projeto."});
         }      
@@ -75,5 +96,6 @@ module.exports = {
     listAllProjects,
     searchProjectById,
     createProject,
+    updateProject,
     deleteProject
 }

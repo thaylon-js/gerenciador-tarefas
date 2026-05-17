@@ -3,7 +3,7 @@ const UserModel = require('../models/UserModel');
 
 async function listAllProjects() {
     return await ProjectModel
-        .findAll({  
+        .findAll({
             order: [['createdAt', 'DESC']],
         })
         .catch((error) => {
@@ -21,55 +21,56 @@ async function searchProjectById(id) {
 
 async function createProject(projectData) {
     const existingProject = await ProjectModel.findOne({
-        where: { name: projectData.name }
+        where: {
+            name: projectData.name,
+        }
     });
 
-    if(existingProject !== 0){
-        return null
+    if (existingProject) {
+        return null;
     }
 
-    return await UserModel
+    return await ProjectModel
         .create(projectData)
         .catch(error => {
             console.error('Erro ao criar projeto:', error);
         });
+}
 
-    }
-    
 
 async function updateProject(id, projectData) {
-    const existingProject = await ProjectModel.findOne({ where: { id: id } });
+    const existingProject = await ProjectModel.findOne({where: {id: id}});
 
-    if(extingProject === 0) {
+    if (!existingProject) {
         return null;
     }
- 
 
-    const projectEffect = await ProjectModel
+
+    return await ProjectModel
         .update(projectData, {
-            where: { id: id }
+            where: {id: id}
         })
         .catch(error => {
             console.error('Erro ao atualizar projeto:', error);
         });
-        if (projectEffect === 0) {
-            return null;
-        }
 }
 
 async function deleteProject(id) {
- const ProjectEffect = await ProjectModel
+    const existingProject = await ProjectModel.findOne({where: {id: id}});
+
+    if (!existingProject) {
+        return null;
+    }
+
+    return await ProjectModel
         .destroy({
-            where: { id: id }
+            where: {id: id}
         })
         .catch(error => {
             console.error('Erro ao excluir projeto:', error);
         });
-
-        if (ProjectEffect === 0) {
-            return null;
-        }  
 }
+
 module.exports = {
     createProject,
     searchProjectById,

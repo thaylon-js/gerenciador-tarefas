@@ -5,9 +5,14 @@ require('dotenv').config();
 
 
 const database = require('./database/database');
+
+// Models
 const ProjectModel = require('./models/ProjectModel');
-const UserModel = require('./models/UserModel'); 
-const userRoutes = require('./routes/UserRoutes');
+const UserModel = require('./models/UserModel');
+
+// Routes
+const ProjectRoutes = require('./routes/ProjectRoutes');
+const UserRoutes = require('./routes/UserRoutes');
 
 
 const app = express();
@@ -19,7 +24,8 @@ app.use(cors({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/users', userRoutes);
+app.use('/api/users', UserRoutes);
+app.use('/api/projects', ProjectRoutes);
 
 database.sync({ force: false })
     .then(() => {
